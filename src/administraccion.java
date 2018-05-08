@@ -216,6 +216,13 @@ public class administraccion {
 		frmAdministracin.getContentPane().add(lblPrecio_1);
 		
 		btnInicio = new JButton("Inicio");
+		btnInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manuinicial ventana=new manuinicial();
+				 ventana.frmBarrestauranteLosPerdidos.setVisible(true);
+				 frmAdministracin.setVisible(false);
+			}
+		});
 		btnInicio.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnInicio.setBounds(253, 378, 194, 40);
 		frmAdministracin.getContentPane().add(btnInicio);

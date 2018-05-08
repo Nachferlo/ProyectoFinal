@@ -83,6 +83,13 @@ public class Bar {
 		panel.add(btnEditarMesa);
 		
 		JButton btnNewButton = new JButton("Finalizar pedido");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manuinicial ventana=new manuinicial();
+				 ventana.frmBarrestauranteLosPerdidos.setVisible(true);
+				 frmBar.setVisible(false);
+			}
+		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -153,6 +160,13 @@ public class Bar {
 		panel.add(table_1);
 		
 		JButton btnVolver = new JButton("Inicio");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manuinicial ventana=new manuinicial();
+				 ventana.frmBarrestauranteLosPerdidos.setVisible(true);
+				 frmBar.setVisible(false);
+			}
+		});
 		btnVolver.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnVolver.setBounds(386, 466, 145, 40);
 		panel.add(btnVolver);
@@ -236,6 +250,9 @@ public class Bar {
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Cobrar ventana=new Cobrar();
+				 ventana.frame.setVisible(true);
+				 frmBar.setVisible(false);
 			}
 		});
 		btnNewButton_1.setBounds(243, 466, 125, 40);

@@ -13,7 +13,7 @@ import javax.swing.JToggleButton;
 
 public class Cobrar {
 
-	private JFrame frame;
+	 JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -90,6 +90,9 @@ public class Cobrar {
 		btnFinalizarCobro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Pedido cobrado y finalizado");
+				Bar ventana=new Bar();
+				 ventana.frmBar.setVisible(true);
+			frame.setVisible(false);
 			}
 		});
 		btnFinalizarCobro.setBounds(171, 199, 101, 23);

@@ -14,7 +14,7 @@ import java.awt.Font;
 
 public class manuinicial {
 
-	private JFrame frmBarrestauranteLosPerdidos;
+	 JFrame frmBarrestauranteLosPerdidos;
 
 	/**
 	 * Launch the application.
@@ -51,12 +51,13 @@ public class manuinicial {
 		
 		JButton btnNewButton = new JButton("     Bar");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\bar 1.png"));
+		btnNewButton.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\coas escritorio\\bar 1.png"));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Bar ventana=new Bar();
 				 ventana.frmBar.setVisible(true);
+				 frmBarrestauranteLosPerdidos.setVisible(false);
 				
 			}
 		});
@@ -70,11 +71,12 @@ public class manuinicial {
 			public void actionPerformed(ActionEvent e) {
 				administraccion ventana=new administraccion();
 				 ventana.frmAdministracin.setVisible(true);
+				 frmBarrestauranteLosPerdidos.setVisible(false);
 				
 				
 			}
 		});
-		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\icono-e.png"));
+		btnNewButton_1.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\coas escritorio\\icono-e.png"));
 		btnNewButton_1.setBounds(94, 31, 370, 108);
 		frmBarrestauranteLosPerdidos.getContentPane().add(btnNewButton_1);
 		frmBarrestauranteLosPerdidos.setBounds(100, 100, 612, 400);

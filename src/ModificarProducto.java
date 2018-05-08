@@ -103,7 +103,7 @@ public class ModificarProducto {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				administraccion ventana=new administraccion();
-				 ventana.frmAdministracin.setVisible(true);
+				 ventana.frmAdministracin.setVisible(false);
 				 framemodificar.setVisible(false);
 				
 			}
