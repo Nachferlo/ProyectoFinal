@@ -3,9 +3,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import conexionbasedatos.ConexionBBDD;
+
 import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class ModificarProducto {
 
@@ -44,7 +51,9 @@ public class ModificarProducto {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ConexionBBDD conexion = new ConexionBBDD();
 		framemodificar = new JFrame();
+		framemodificar.getContentPane().setForeground(new Color(51, 204, 255));
 		framemodificar.setBounds(100, 100, 450, 300);
 		framemodificar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		framemodificar.getContentPane().setLayout(null);
@@ -58,12 +67,12 @@ public class ModificarProducto {
 		framemodificar.getContentPane().add(lblCategoria);
 		
 		textField = new JTextField();
-		textField.setBounds(113, 65, 89, 20);
+		textField.setBounds(113, 35, 89, 20);
 		framemodificar.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(113, 35, 89, 20);
+		textField_1.setBounds(113, 65, 89, 20);
 		framemodificar.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -95,6 +104,26 @@ public class ModificarProducto {
 		framemodificar.getContentPane().add(lblCantidad);
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.valueOf(textField.getText());
+				String categoria = String.valueOf(textField_1.getText());
+				String nombre = String.valueOf(textField_2.getText());
+				int precio = Integer.valueOf(textField_3.getText());
+				int cantidad = Integer.valueOf(textField_4.getText());
+				
+				
+				if(id != 0 && categoria != null && nombre != null && precio != 0 && cantidad != 0) {
+
+				try {
+					conexion.EliminarProducto(id);
+					conexion.AñadirProducto(id, categoria, nombre, precio, cantidad);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				}
+			}
+		});
 		btnModificar.setBounds(35, 210, 89, 23);
 		framemodificar.getContentPane().add(btnModificar);
 		

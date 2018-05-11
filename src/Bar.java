@@ -13,6 +13,9 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import conexionbasedatos.ConexionBBDD;
+
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
@@ -35,7 +38,6 @@ public class Bar {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
-	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -64,6 +66,7 @@ public class Bar {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ConexionBBDD conexion = new ConexionBBDD();
 		frmBar = new JFrame();
 		frmBar.getContentPane().setBackground(Color.ORANGE);
 		
@@ -73,11 +76,37 @@ public class Bar {
 		panel.setLayout(null);
 		
 		JButton btnAadirMesa = new JButton("A\u00F1adir Mesa");
+		btnAadirMesa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.valueOf(textField.getText());
+				int precio = Integer.valueOf(textField_5.getText());
+				try {
+					conexion.AñadirMesa(id, precio);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				
+			}
+		});
 		btnAadirMesa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnAadirMesa.setBounds(26, 30, 145, 40);
 		panel.add(btnAadirMesa);
 		
 		JButton btnEditarMesa = new JButton("Nuevo pedido");
+		btnEditarMesa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int id = Integer.valueOf(textField_1.getText());
+				int id_m = Integer.valueOf(textField_2.getText());
+				int id_c = Integer.valueOf(textField_3.getText());
+				int num = Integer.valueOf(textField_6.getText());
+				
+				try {
+					conexion.AñadirPedido(id, id_m, id_c, num);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnEditarMesa.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnEditarMesa.setBounds(26, 163, 145, 40);
 		panel.add(btnEditarMesa);
@@ -104,7 +133,7 @@ public class Bar {
 		
 		table = new JTable();
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
-		table.setBounds(268, 30, 443, 80);
+		table.setBounds(268, 30, 443, 112);
 		panel.add(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -156,7 +185,7 @@ public class Bar {
 					"ID_Pedido", "ID_Cuenta", "ID_Mesa", "Nº Productos"
 			}
 		));
-		table_1.setBounds(268, 163, 443, 96);
+		table_1.setBounds(268, 177, 443, 112);
 		panel.add(table_1);
 		
 		JButton btnVolver = new JButton("Inicio");
@@ -184,12 +213,28 @@ public class Bar {
 					"ID_Cuenta", "Precio"
 			}
 		));
+		
+		ConexionBBDD Prueba = new ConexionBBDD();
+		table.setModel(Prueba.ConsultaTablaMESA());
+		table_1.setModel(Prueba.ConsultaTablaPEDIDO());
+		table_2.setModel(Prueba.ConsultaTablaCUENTA());
+		
 		table_2.setForeground(Color.BLACK);
 		table_2.setBackground(Color.WHITE);
-		table_2.setBounds(268, 353, 443, 64);
+		table_2.setBounds(268, 353, 443, 80);
 		panel.add(table_2);
 		
-		btnCuentas = new JButton("Cuentas no pagadas");
+		btnCuentas = new JButton("Cuentas Pagada");
+		btnCuentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.valueOf(textField_4.getText());
+				try {
+					conexion.EliminarCuenta(id);
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
 		btnCuentas.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnCuentas.setBounds(26, 363, 170, 40);
 		panel.add(btnCuentas);
@@ -237,15 +282,6 @@ public class Bar {
 		lblIdcuenta_1.setBounds(26, 428, 67, 14);
 		panel.add(lblIdcuenta_1);
 		
-		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setBounds(26, 462, 46, 14);
-		panel.add(lblPrecio);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(110, 456, 86, 20);
-		panel.add(textField_7);
-		
 		JButton btnNewButton_1 = new JButton("Cobrar");
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -257,8 +293,49 @@ public class Bar {
 		});
 		btnNewButton_1.setBounds(243, 466, 125, 40);
 		panel.add(btnNewButton_1);
+		
+		JButton actualizar2 = new JButton("");
+		actualizar2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table_1.setModel(conexion.ConsultaTablaPEDIDO());
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
+		actualizar2.setBounds(238, 171, 20, 20);
+		panel.add(actualizar2);
+		
+		JButton actualizar = new JButton("");
+		actualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table.setModel(conexion.ConsultaTablaMESA());
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
+		actualizar.setBounds(238, 22, 20, 20);
+		panel.add(actualizar);
+		
+		JButton actualizar3 = new JButton("");
+		actualizar3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					table_2.setModel(conexion.ConsultaTablaCUENTA());
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
+		actualizar3.setBounds(238, 349, 20, 20);
+		panel.add(actualizar3);
 		frmBar.setTitle("Bar");
 		frmBar.setBounds(100, 100, 737, 556);
 		frmBar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 	}
 }

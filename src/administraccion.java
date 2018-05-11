@@ -22,26 +22,34 @@ import javax.swing.JLabel;
 import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class administraccion {
 
 	JFrame frmAdministracin;
-	private JTable table;
-	private JTextField textField;
-	private JTable table_1;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	protected Object frame;
-	private JLabel lblIdproducto;
-	private JTextField textField_7;
-	private JLabel lblIdproducto_1;
-	private JLabel lblId;
-	private JLabel lblNombre;
-	private JLabel lblPrecio;
-	private JTextField textField_8;
-	private JLabel lblPrecio_1;
-	private JButton btnInicio;
+	 JTable table;
+	 JTextField texteliminar;
+	 JTable table_1;
+	 JTextField prod;
+	 JTextField cat;
+	 JTextField nom;
+	 Object frame;
+	 JLabel lblIdproducto;
+	 JTextField pred;
+	 JLabel lblIdproducto_1;
+	 JLabel lblId;
+	 JLabel lblNombre;
+	 JLabel lblPrecio;
+	 JTextField cant;
+	 JLabel lblPrecio_1;
+	 JButton btnInicio;
+	 int id_eliminar;
+	 int id_producto;
+		String categoria;
+		String nombre;
+		int precio;
+		int cantidad;
+	
 
 	/**
 	 * Launch the application.
@@ -70,6 +78,8 @@ public class administraccion {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ConexionBBDD conexion = new ConexionBBDD();
+		
 		frmAdministracin = new JFrame();
 		frmAdministracin.setTitle("Administraci\u00F3n");
 		frmAdministracin.getContentPane().setBackground(Color.ORANGE);
@@ -95,36 +105,60 @@ public class administraccion {
 		frmAdministracin.getContentPane().add(btnAadirCategoria);
 		
 		JButton btnAadirProducto = new JButton("A\u00F1adir producto");
+		btnAadirProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				id_producto = Integer.valueOf(prod.getText());
+				categoria = String.valueOf(cat.getText());
+				nombre = String.valueOf(nom.getText());
+				precio = Integer.valueOf(pred.getText());
+				cantidad = Integer.valueOf(cant.getText());
+				
+				
+				if(id_producto != 0 && categoria != null && nombre != null && precio != 0 && cantidad != 0) {
+					try {
+						conexion.AñadirProducto(id_producto, categoria, nombre, precio, cantidad);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		btnAadirProducto.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnAadirProducto.setBounds(30, 125, 185, 40);
 		frmAdministracin.getContentPane().add(btnAadirProducto);
 		
+		
 		JButton btnEliminarProducto = new JButton("Eliminar producto");
 		btnEliminarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				id_eliminar = Integer.valueOf(texteliminar.getText());
 				
-			
-			
-			
+				try {
+					conexion.EliminarProducto(id_eliminar);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnEliminarProducto.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnEliminarProducto.setBounds(30, 30, 185, 40);
 		frmAdministracin.getContentPane().add(btnEliminarProducto);
 		
-		textField = new JTextField();
-		textField.setBounds(118, 94, 83, 20);
-		frmAdministracin.getContentPane().add(textField);
-		textField.setColumns(10);
+		
+		texteliminar = new JTextField();
+		texteliminar.setBounds(118, 94, 83, 20);
+		frmAdministracin.getContentPane().add(texteliminar);
+		texteliminar.setColumns(10);
 		
 		table = new JTable();
 		table.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
-		table.setBounds(253, 30, 375, 96);
+		table.setBounds(253, 30, 375, 183);
 		frmAdministracin.getContentPane().add(table);
 		table.setBackground(Color.WHITE);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"ID", "ID_Categoria", "Nombre", "Precio", null},
+				{"ID", "Categoria", "Nombre", "Precio", null},
 				{"", "", "", "", null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
@@ -149,20 +183,20 @@ public class administraccion {
 		table_1.setBounds(598, 347, -317, -42);
 		frmAdministracin.getContentPane().add(table_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(110, 173, 91, 20);
-		frmAdministracin.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		prod = new JTextField();
+		prod.setBounds(120, 173, 91, 20);
+		frmAdministracin.getContentPane().add(prod);
+		prod.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(110, 204, 91, 20);
-		frmAdministracin.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		cat = new JTextField();
+		cat.setBounds(120, 204, 91, 20);
+		frmAdministracin.getContentPane().add(cat);
+		cat.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(110, 261, 91, 20);
-		frmAdministracin.getContentPane().add(textField_3);
+		nom = new JTextField();
+		nom.setColumns(10);
+		nom.setBounds(120, 261, 91, 20);
+		frmAdministracin.getContentPane().add(nom);
 		
 		JButton btnNewButton = new JButton("listar productos");
 		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -172,30 +206,28 @@ public class administraccion {
 				ConexionBBDD Prueba = new ConexionBBDD();
 				table.setModel(Prueba.ConsultaTablaEmpleados());
 				
-				
-			
 			}
 			
 			
 		});
-		btnNewButton.setBounds(253, 151, 238, 40);
+		btnNewButton.setBounds(255, 224, 238, 40);
 		frmAdministracin.getContentPane().add(btnNewButton);
 		
 		lblIdproducto = new JLabel("ID_Producto");
-		lblIdproducto.setBounds(30, 94, 65, 14);
+		lblIdproducto.setBounds(30, 94, 70, 14);
 		frmAdministracin.getContentPane().add(lblIdproducto);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(110, 292, 91, 20);
-		frmAdministracin.getContentPane().add(textField_7);
+		pred = new JTextField();
+		pred.setColumns(10);
+		pred.setBounds(120, 292, 91, 20);
+		frmAdministracin.getContentPane().add(pred);
 		
 		lblIdproducto_1 = new JLabel("ID_Producto");
 		lblIdproducto_1.setBounds(30, 176, 70, 14);
 		frmAdministracin.getContentPane().add(lblIdproducto_1);
 		
-		lblId = new JLabel("ID");
-		lblId.setBounds(30, 208, 46, 14);
+		lblId = new JLabel("Categoria");
+		lblId.setBounds(30, 208, 55, 14);
 		frmAdministracin.getContentPane().add(lblId);
 		
 		lblNombre = new JLabel("Nombre");
@@ -206,13 +238,13 @@ public class administraccion {
 		lblPrecio.setBounds(30, 295, 46, 14);
 		frmAdministracin.getContentPane().add(lblPrecio);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(110, 235, 91, 20);
-		frmAdministracin.getContentPane().add(textField_8);
+		cant = new JTextField();
+		cant.setColumns(10);
+		cant.setBounds(120, 235, 91, 20);
+		frmAdministracin.getContentPane().add(cant);
 		
-		lblPrecio_1 = new JLabel("Precio");
-		lblPrecio_1.setBounds(30, 239, 46, 14);
+		lblPrecio_1 = new JLabel("Cantidad");
+		lblPrecio_1.setBounds(30, 239, 50, 14);
 		frmAdministracin.getContentPane().add(lblPrecio_1);
 		
 		btnInicio = new JButton("Inicio");

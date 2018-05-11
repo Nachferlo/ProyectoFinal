@@ -13,11 +13,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {
 
-	private String bd;
-	private String url= "jdbc:oracle:thin:@localhost:1521:XE";
-	private String usr = "SYSTEM";
-	private String pwd = "Rompe_98";
-	private Connection conexion;
+	String bd;
+	String url= "jdbc:oracle:thin:@localhost:1521:XE";
+	String usr = "SYSTEM";
+	String pwd = "S0053019900ma";
+	Connection conexion;
+	Statement stmt;
 	
 
 	public ConexionBBDD()  {
@@ -41,17 +42,17 @@ public class ConexionBBDD {
 	}
 	
 	public DefaultTableModel ConsultaTablaEmpleados() {
-		String [] columnas={"ID_PRODUCTO","ID_CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
-		String [] registro={"ID_PRODUCTO","ID_CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
+		String [] columnas={"ID_PRODUCTO","CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
+		String [] registro={"ID_PRODUCTO","CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM EJERCICIOINSERT.PRODUCTOS";
+		String query = "SELECT * FROM SMA.PRODUCTOS";
 		  ModeloTabla.addRow(registro);
 		try {
-			Statement stmt = conexion.createStatement();
+			stmt = conexion.createStatement();
 			ResultSet rset = stmt.executeQuery(query);
 			while(rset.next()) {
 				 registro[0]=rset.getString("ID_PRODUCTO");
-		         registro[1]=rset.getString("ID_CATEGORIA");
+		         registro[1]=rset.getString("CATEGORIA");
 		         registro[2]=rset.getString("NOMBRE");
 		         registro[3]=rset.getString("PRECIO");
 		         registro[4]=rset.getString("CANTIDAD");
@@ -68,11 +69,165 @@ public class ConexionBBDD {
 		
 	}
 	
-	
-
-
+	public DefaultTableModel ConsultaTablaMESA() {
+		String [] columnas={"ID_MESA","N_PERSONAS"};
+		String [] registro={"ID_MESA","N_PERSONAS"};
+		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
+		String query = "SELECT * FROM SMA.MESA";
+		  ModeloTabla.addRow(registro);
+		try {
+			stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				 registro[0]=rset.getString("ID_MESA");
+		         registro[1]=rset.getString("N_PERSONAS");
+		         ModeloTabla.addRow(registro);
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return ModeloTabla;
 		
 	}
+	
+	public DefaultTableModel ConsultaTablaCUENTA() {
+		String [] columnas={"ID_CUENTA","PRECIO_TOTAL"};
+		String [] registro={"ID_CUENTA","PRECIO_TOTAL"};
+		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
+		String query = "SELECT * FROM SMA.CUENTA";
+		  ModeloTabla.addRow(registro);
+		try {
+			stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				 registro[0]=rset.getString("ID_CUENTA");
+		         registro[1]=rset.getString("PRECIO_TOTAL");
+		         ModeloTabla.addRow(registro);
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return ModeloTabla;
+		
+	}
+	
+public int EliminarCuenta(int id) throws SQLException {
+		
+		int resultado = 0;
+		String eliminar = "DELETE FROM SMA.CUENTA WHERE ID_CUENTA = " + id;
+		  
+		try {
+			stmt = conexion.createStatement();
+			resultado = stmt.executeUpdate(eliminar);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return resultado;	
+	}
+	
+	public DefaultTableModel ConsultaTablaPEDIDO() {
+		String [] columnas={"ID_PEDIDO","ID_CUENTA", "ID_MESA", "N_PRODUCTOS"};
+		String [] registro={"ID_PEDIDO","ID_CUENTA", "ID_MESA", "N_PRODUCTOS"};
+		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
+		String query = "SELECT * FROM SMA.PEDIDOS";
+		  ModeloTabla.addRow(registro);
+		try {
+			stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				 registro[0]=rset.getString("ID_PEDIDO");
+		         registro[1]=rset.getString("ID_CUENTA");
+		         registro[2]=rset.getString("ID_MESA");
+		         registro[3]=rset.getString("N_PRODUCTOS");
+		         ModeloTabla.addRow(registro);
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return ModeloTabla;
+		
+	}
+	
+	public int AñadirProducto(int id, String categoria, String nombre, int precio, int cantidad) throws SQLException {
+		
+		int resultado = 0;
+		String añadir = "INSERT INTO SMA.PRODUCTOS VALUES (" + id + ", " + "'" + categoria + "'" + ", " +  "'" + nombre + "'" + ", " + precio + ", " + cantidad + ")";
+		System.out.println(añadir);
+		  
+		try {
+			stmt = conexion.createStatement();
+			resultado = stmt.executeUpdate(añadir);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return resultado;	
+	}
+	
+	public int EliminarProducto(int id) throws SQLException {
+		
+		int resultado = 0;
+		String eliminar = "DELETE FROM SMA.PRODUCTOS WHERE ID_PRODUCTO = " + id;
+		  
+		try {
+			stmt = conexion.createStatement();
+			resultado = stmt.executeUpdate(eliminar);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return resultado;	
+	}
+
+		
+	public int AñadirPedido(int id_pedido, int id_cuenta, int id_mesa, int num) throws SQLException {
+		
+		int resultado = 0;
+		String añadir = "INSERT INTO SMA.PEDIDOS VALUES (" + id_pedido + "," + id_cuenta + "," + id_mesa + "," + num + ")";
+		  
+		try {
+			stmt = conexion.createStatement();
+			resultado = stmt.executeUpdate(añadir);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return resultado;	
+	}
+	
+	public int AñadirMesa(int id_cuenta, int precio) throws SQLException {
+		
+		int resultado = 0;
+		String añadir = "INSERT INTO SMA.MESA VALUES (" + id_cuenta + "," + precio + ")";
+		  
+		try {
+			stmt = conexion.createStatement();
+			resultado = stmt.executeUpdate(añadir);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return resultado;	
+	}
+}
 	
 	
 
