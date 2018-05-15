@@ -119,14 +119,14 @@ public class ConexionBBDD {
 		
 	}
 	
-public int EliminarCuenta(int id) throws SQLException {
+public int EliminarCuenta(int id, int precio) throws SQLException {
 		
 		int resultado = 0;
-		String eliminar = "DELETE FROM SMA.CUENTA WHERE ID_CUENTA = " + id;
+		String insertar = "INSERT INTO SMA.CUENTA VALUES ( " + id + ", " + precio + ")";
 		  
 		try {
 			stmt = conexion.createStatement();
-			resultado = stmt.executeUpdate(eliminar);
+			resultado = stmt.executeUpdate(insertar);
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -82,7 +82,7 @@ public class administraccion {
 		
 		frmAdministracin = new JFrame();
 		frmAdministracin.setTitle("Administraci\u00F3n");
-		frmAdministracin.getContentPane().setBackground(Color.ORANGE);
+		frmAdministracin.getContentPane().setBackground(new Color(204, 51, 51));
 		frmAdministracin.setBounds(100, 100, 654, 487);
 		frmAdministracin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAdministracin.getContentPane().setLayout(null);
@@ -129,6 +129,7 @@ public class administraccion {
 		
 		
 		JButton btnEliminarProducto = new JButton("Eliminar producto");
+		btnEliminarProducto.setBackground(Color.WHITE);
 		btnEliminarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				id_eliminar = Integer.valueOf(texteliminar.getText());

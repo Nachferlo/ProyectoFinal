@@ -53,6 +53,7 @@ public class ModificarProducto {
 	private void initialize() {
 		ConexionBBDD conexion = new ConexionBBDD();
 		framemodificar = new JFrame();
+		framemodificar.getContentPane().setBackground(new Color(255, 255, 153));
 		framemodificar.getContentPane().setForeground(new Color(51, 204, 255));
 		framemodificar.setBounds(100, 100, 450, 300);
 		framemodificar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

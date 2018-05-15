@@ -38,6 +38,7 @@ public class Bar {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -71,11 +72,12 @@ public class Bar {
 		frmBar.getContentPane().setBackground(Color.ORANGE);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 153, 255));
+		panel.setBackground(new Color(153, 204, 102));
 		frmBar.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		JButton btnAadirMesa = new JButton("A\u00F1adir Mesa");
+		btnAadirMesa.setBackground(Color.WHITE);
 		btnAadirMesa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(textField.getText());
@@ -93,6 +95,8 @@ public class Bar {
 		panel.add(btnAadirMesa);
 		
 		JButton btnEditarMesa = new JButton("Nuevo pedido");
+		btnEditarMesa.setBackground(Color.WHITE);
+		btnEditarMesa.setForeground(Color.BLACK);
 		btnEditarMesa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int id = Integer.valueOf(textField_1.getText());
@@ -154,6 +158,7 @@ public class Bar {
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setBackground(new Color(255, 255, 255));
 		textField_1.setColumns(10);
 		textField_1.setBounds(110, 242, 86, 20);
 		panel.add(textField_1);
@@ -170,7 +175,7 @@ public class Bar {
 		
 		table_1 = new JTable();
 		table_1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
-		table_1.setBackground(Color.WHITE);
+		table_1.setBackground(new Color(255, 255, 255));
 		table_1.setForeground(Color.BLACK);
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -185,7 +190,7 @@ public class Bar {
 					"ID_Pedido", "ID_Cuenta", "ID_Mesa", "Nº Productos"
 			}
 		));
-		table_1.setBounds(268, 177, 443, 112);
+		table_1.setBounds(268, 177, 443, 144);
 		panel.add(table_1);
 		
 		JButton btnVolver = new JButton("Inicio");
@@ -221,15 +226,17 @@ public class Bar {
 		
 		table_2.setForeground(Color.BLACK);
 		table_2.setBackground(Color.WHITE);
-		table_2.setBounds(268, 353, 443, 80);
+		table_2.setBounds(268, 353, 443, 97);
 		panel.add(table_2);
 		
-		btnCuentas = new JButton("Cuentas Pagada");
+		btnCuentas = new JButton("Nueva Cuenta");
+		btnCuentas.setBackground(Color.WHITE);
 		btnCuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.valueOf(textField_4.getText());
+				int precio = Integer.valueOf(textField_7.getText());
 				try {
-					conexion.EliminarCuenta(id);
+					conexion.EliminarCuenta(id, precio);
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
@@ -332,6 +339,15 @@ public class Bar {
 		});
 		actualizar3.setBounds(238, 349, 20, 20);
 		panel.add(actualizar3);
+		
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(110, 466, 86, 20);
+		panel.add(textField_7);
+		
+		JLabel lblPrecio = new JLabel("Precio");
+		lblPrecio.setBounds(26, 469, 67, 14);
+		panel.add(lblPrecio);
 		frmBar.setTitle("Bar");
 		frmBar.setBounds(100, 100, 737, 556);
 		frmBar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
