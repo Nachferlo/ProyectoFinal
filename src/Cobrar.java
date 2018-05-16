@@ -1,20 +1,14 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JToggleButton;
-
 import conexionbasedatos.ConexionBBDD;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTable;
 
 public class Cobrar {
 
@@ -23,22 +17,8 @@ public class Cobrar {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Cobrar window = new Cobrar();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTable table;
+	
 
 	/**
 	 * Create the application.
@@ -144,5 +124,10 @@ public class Cobrar {
 		});
 		boton.setBounds(224, 29, 18, 20);
 		frame.getContentPane().add(boton);
+		
+		table = new JTable();
+		table.setModel(conexion.ConsultaTablaCUENTA());
+		table.setBounds(269, 48, 142, 119);
+		frame.getContentPane().add(table);
 	}
 }

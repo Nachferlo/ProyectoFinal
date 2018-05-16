@@ -1,26 +1,30 @@
 package conexionbasedatos;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {
 
 	String bd;
-	String url= "jdbc:oracle:thin:@localhost:1521:XE";
-	String usr = "SYSTEM";
-	String pwd = "S0053019900ma";
-	String xcema = "SMA";
+	String url;
+	String usr;
+	String pwd;
+	String xcema;
 	Connection conexion;
 	Statement stmt;
 	
 
 	public ConexionBBDD()  {
+		FicheroINI();
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -50,7 +54,7 @@ public class ConexionBBDD {
 			stmt = conexion.createStatement();
 			ResultSet rset = stmt.executeQuery(query);
 			while(rset.next()) {
-				 registro[0]=rset.getString("ID_PRODUCTO");
+				registro[0]=rset.getString("ID_PRODUCTO");
 		         registro[1]=rset.getString("CATEGORIA");
 		         registro[2]=rset.getString("NOMBRE");
 		         registro[3]=rset.getString("PRECIO");
@@ -241,6 +245,64 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 		}
 		return resul;
 	}
+	
+	public void FicheroINI() {
+
+		Properties propiedades = new Properties();
+
+		InputStream entrada = null;
+
+		try {
+
+			File miFichero = new File("src/configuracion.ini");
+
+			if(miFichero.exists()) {
+
+				entrada = new FileInputStream(miFichero);
+
+				propiedades.load(entrada);
+
+				url=propiedades.getProperty("url");
+
+				usr=propiedades.getProperty("usuario");
+
+				pwd=propiedades.getProperty("contraseña");
+
+				xcema=propiedades.getProperty("xcema");
+
+			}
+
+			else {
+
+				System.err.println("fichero no encontrado");
+
+			}
+
+		}catch(IOException ex) {
+
+			ex.printStackTrace();
+
+		}finally {
+
+			if(entrada != null) {
+
+				try {
+
+					entrada.close();
+
+				}catch(IOException e) {
+
+					e.printStackTrace();
+
+				}
+
+			}
+
+		}
+
+	}
+
+
 }
 	
 	

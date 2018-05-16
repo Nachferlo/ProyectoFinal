@@ -1,24 +1,16 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import conexionbasedatos.ConexionBBDD;
-
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
@@ -39,26 +31,8 @@ public class Bar {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Bar window = new Bar();
-					window.frmBar.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+	
+	
 	public Bar() {
 		initialize();
 	}
@@ -84,10 +58,10 @@ public class Bar {
 				int precio = Integer.valueOf(textField_5.getText());
 				try {
 					conexion.AñadirMesa(id, precio);
+					table.setModel(conexion.ConsultaTablaMESA());
 				} catch (Exception e2) {
 					e2.printStackTrace();
-				}
-				
+				}			
 			}
 		});
 		btnAadirMesa.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -106,6 +80,7 @@ public class Bar {
 				
 				try {
 					conexion.AñadirPedido(id, id_m, id_c, num);
+					table_1.setModel(conexion.ConsultaTablaPEDIDO());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -160,17 +135,17 @@ public class Bar {
 		textField_1 = new JTextField();
 		textField_1.setBackground(new Color(255, 255, 255));
 		textField_1.setColumns(10);
-		textField_1.setBounds(110, 242, 86, 20);
+		textField_1.setBounds(110, 227, 86, 20);
 		panel.add(textField_1);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(110, 273, 86, 20);
+		textField_2.setBounds(110, 258, 86, 20);
 		panel.add(textField_2);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(110, 304, 86, 20);
+		textField_3.setBounds(110, 289, 86, 20);
 		panel.add(textField_3);
 		
 		table_1 = new JTable();
@@ -237,6 +212,7 @@ public class Bar {
 				int precio = Integer.valueOf(textField_7.getText());
 				try {
 					conexion.EliminarCuenta(id, precio);
+					table_2.setModel(conexion.ConsultaTablaCUENTA());
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
@@ -265,24 +241,24 @@ public class Bar {
 		panel.add(lblNpersonas);
 		
 		JLabel lblIdpedido = new JLabel("ID_Pedido");
-		lblIdpedido.setBounds(26, 245, 74, 14);
+		lblIdpedido.setBounds(26, 230, 74, 14);
 		panel.add(lblIdpedido);
 		
 		JLabel lblIdcuenta = new JLabel("Id_Cuenta");
-		lblIdcuenta.setBounds(26, 276, 74, 14);
+		lblIdcuenta.setBounds(26, 261, 74, 14);
 		panel.add(lblIdcuenta);
 		
 		JLabel lblIdmesa_1 = new JLabel("ID_mesa");
-		lblIdmesa_1.setBounds(26, 307, 74, 14);
+		lblIdmesa_1.setBounds(26, 292, 74, 14);
 		panel.add(lblIdmesa_1);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(110, 332, 86, 20);
+		textField_6.setBounds(110, 320, 86, 20);
 		panel.add(textField_6);
 		
 		JLabel lblNproductos = new JLabel("N\u00BAProductos");
-		lblNproductos.setBounds(26, 332, 67, 14);
+		lblNproductos.setBounds(26, 323, 67, 14);
 		panel.add(lblNproductos);
 		
 		JLabel lblIdcuenta_1 = new JLabel("ID_Cuenta");
@@ -300,45 +276,6 @@ public class Bar {
 		});
 		btnNewButton_1.setBounds(243, 466, 125, 40);
 		panel.add(btnNewButton_1);
-		
-		JButton actualizar2 = new JButton("");
-		actualizar2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table_1.setModel(conexion.ConsultaTablaPEDIDO());
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
-		actualizar2.setBounds(238, 171, 20, 20);
-		panel.add(actualizar2);
-		
-		JButton actualizar = new JButton("");
-		actualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table.setModel(conexion.ConsultaTablaMESA());
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
-		actualizar.setBounds(238, 22, 20, 20);
-		panel.add(actualizar);
-		
-		JButton actualizar3 = new JButton("");
-		actualizar3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table_2.setModel(conexion.ConsultaTablaCUENTA());
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
-		actualizar3.setBounds(238, 349, 20, 20);
-		panel.add(actualizar3);
 		
 		textField_7 = new JTextField();
 		textField_7.setColumns(10);

@@ -16,11 +16,13 @@ public class manuinicial {
 
 	 JFrame frmBarrestauranteLosPerdidos;
 	 administraccion administracion;
+	 ModificarProducto modificar;
+	 Cobrar cobrar;
+	 Bar bar;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		administraccion administracion = new administraccion();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
