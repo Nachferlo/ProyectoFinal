@@ -1,0 +1,33 @@
+DROP TABLE productos CASCADE CONSTRAINT;
+DROP TABLE categoria CASCADE CONSTRAINT;
+DROP TABLE pedidos CASCADE CONSTRAINT;
+DROP TABLE mesa CASCADE CONSTRAINT;
+DROP TABLE cuenta CASCADE CONSTRAINT;
+DROP TABLE usan CASCADE CONSTRAINT;
+
+CREATE TABLE mesa(ID_mesa NUMBER(9) PRIMARY KEY,
+    N_personas NUMBER(10));
+
+CREATE TABLE cuenta(ID_cuenta NUMBER(9) PRIMARY KEY,
+    precio_total NUMBER(9));
+  
+CREATE TABLE pedidos (ID_pedido NUMBER(9) PRIMARY KEY,
+    ID_cuenta NUMBER(9),
+    ID_mesa NUMBER(9),
+    N_productos NUMBER(9),
+    FOREIGN KEY (ID_cuenta) REFERENCES cuenta(ID_cuenta),
+    FOREIGN KEY (ID_mesa) REFERENCES mesa(ID_mesa));
+
+    
+CREATE TABLE productos(ID_producto NUMBER(9) PRIMARY KEY,
+    categoria VARCHAR2(20),
+    nombre VARCHAR2(30),
+    precio NUMBER(2),
+    cantidad NUMBER(2));
+    
+    
+CREATE TABLE usan(ID_pedido NUMBER(9),
+    ID_producto NUMBER(9),
+    CONSTRAINT usan_pk PRIMARY KEY(ID_pedido , ID_producto),
+    CONSTRAINT usan1_fk FOREIGN KEY(ID_pedido) REFERENCES pedidos(ID_pedido) ON DELETE CASCADE,
+    CONSTRAINT usan2_fk FOREIGN KEY(ID_producto) REFERENCES productos(ID_producto) ON DELETE CASCADE);

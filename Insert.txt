@@ -1,0 +1,27 @@
+DROP TABLE productos CASCADE CONSTRAINT;
+DROP TABLE categoria CASCADE CONSTRAINT;
+DROP TABLE pedidos CASCADE CONSTRAINT;
+INSERT INTO mesa VALUES (1, 5);
+INSERT INTO mesa VALUES (2, 10);
+INSERT INTO mesa VALUES (3, 2);
+INSERT INTO mesa VALUES (4, 1);
+
+INSERT INTO cuenta VALUES (1, 56);
+INSERT INTO cuenta VALUES (2, 145);
+INSERT INTO cuenta VALUES (3, 32);
+INSERT INTO cuenta VALUES (4, 16);
+
+INSERT INTO pedidos VALUES (1,1,1,8);
+INSERT INTO pedidos VALUES (2,2,2,21);
+INSERT INTO pedidos VALUES (3,3,3,4);
+INSERT INTO pedidos VALUES (4,4,4,2);
+
+INSERT INTO productos VALUES (1,'carne','entrecot',9, 3);
+INSERT INTO productos VALUES (2,'alcohol','ginebra',5, 5);
+INSERT INTO productos VALUES (3,'refresco','cocacola',2, 7);
+INSERT INTO productos VALUES (4,'Postre','helado',2, 21);
+    
+INSERT INTO usan VALUES (1, 1);
+INSERT INTO usan VALUES (2, 2);
+INSERT INTO usan VALUES (3, 3);
+INSERT INTO usan VALUES (4, 4);
