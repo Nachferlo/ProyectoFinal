@@ -1,6 +1,4 @@
 package conexionbasedatos;
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +15,7 @@ public class ConexionBBDD {
 	String url= "jdbc:oracle:thin:@localhost:1521:XE";
 	String usr = "SYSTEM";
 	String pwd = "S0053019900ma";
+	String xcema = "SMA";
 	Connection conexion;
 	Statement stmt;
 	
@@ -45,7 +44,7 @@ public class ConexionBBDD {
 		String [] columnas={"ID_PRODUCTO","CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
 		String [] registro={"ID_PRODUCTO","CATEGORIA", "NOMBRE", "PRECIO", "CANTIDAD"};
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM SMA.PRODUCTOS";
+		String query = "SELECT * FROM " +  xcema + ".PRODUCTOS";
 		  ModeloTabla.addRow(registro);
 		try {
 			stmt = conexion.createStatement();
@@ -73,7 +72,7 @@ public class ConexionBBDD {
 		String [] columnas={"ID_MESA","N_PERSONAS"};
 		String [] registro={"ID_MESA","N_PERSONAS"};
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM SMA.MESA";
+		String query = "SELECT * FROM " +  xcema + ".MESA";
 		  ModeloTabla.addRow(registro);
 		try {
 			stmt = conexion.createStatement();
@@ -98,7 +97,7 @@ public class ConexionBBDD {
 		String [] columnas={"ID_CUENTA","PRECIO_TOTAL"};
 		String [] registro={"ID_CUENTA","PRECIO_TOTAL"};
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM SMA.CUENTA";
+		String query = "SELECT * FROM " +  xcema + ".CUENTA";
 		  ModeloTabla.addRow(registro);
 		try {
 			stmt = conexion.createStatement();
@@ -122,7 +121,7 @@ public class ConexionBBDD {
 public int EliminarCuenta(int id, int precio) throws SQLException {
 		
 		int resultado = 0;
-		String insertar = "INSERT INTO SMA.CUENTA VALUES ( " + id + ", " + precio + ")";
+		String insertar = "INSERT INTO " +  xcema + ".CUENTA VALUES ( " + id + ", " + precio + ")";
 		  
 		try {
 			stmt = conexion.createStatement();
@@ -139,7 +138,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 		String [] columnas={"ID_PEDIDO","ID_CUENTA", "ID_MESA", "N_PRODUCTOS"};
 		String [] registro={"ID_PEDIDO","ID_CUENTA", "ID_MESA", "N_PRODUCTOS"};
 		DefaultTableModel ModeloTabla = new DefaultTableModel(null,columnas);
-		String query = "SELECT * FROM SMA.PEDIDOS";
+		String query = "SELECT * FROM " +  xcema + ".PEDIDOS";
 		  ModeloTabla.addRow(registro);
 		try {
 			stmt = conexion.createStatement();
@@ -165,7 +164,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public int AñadirProducto(int id, String categoria, String nombre, int precio, int cantidad) throws SQLException {
 		
 		int resultado = 0;
-		String añadir = "INSERT INTO SMA.PRODUCTOS VALUES (" + id + ", " + "'" + categoria + "'" + ", " +  "'" + nombre + "'" + ", " + precio + ", " + cantidad + ")";
+		String añadir = "INSERT INTO" +  xcema + ".PRODUCTOS VALUES (" + id + ", " + "'" + categoria + "'" + ", " +  "'" + nombre + "'" + ", " + precio + ", " + cantidad + ")";
 		System.out.println(añadir);
 		  
 		try {
@@ -182,7 +181,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public int EliminarProducto(int id) throws SQLException {
 		
 		int resultado = 0;
-		String eliminar = "DELETE FROM SMA.PRODUCTOS WHERE ID_PRODUCTO = " + id;
+		String eliminar = "DELETE FROM " +  xcema + ".PRODUCTOS WHERE ID_PRODUCTO = " + id;
 		  
 		try {
 			stmt = conexion.createStatement();
@@ -199,7 +198,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public int AñadirPedido(int id_pedido, int id_cuenta, int id_mesa, int num) throws SQLException {
 		
 		int resultado = 0;
-		String añadir = "INSERT INTO SMA.PEDIDOS VALUES (" + id_pedido + "," + id_cuenta + "," + id_mesa + "," + num + ")";
+		String añadir = "INSERT INTO " +  xcema + ".PEDIDOS VALUES (" + id_pedido + "," + id_cuenta + "," + id_mesa + "," + num + ")";
 		  
 		try {
 			stmt = conexion.createStatement();
@@ -215,7 +214,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public int AñadirMesa(int id_cuenta, int precio) throws SQLException {
 		
 		int resultado = 0;
-		String añadir = "INSERT INTO SMA.MESA VALUES (" + id_cuenta + "," + precio + ")";
+		String añadir = "INSERT INTO " +  xcema + ".MESA VALUES (" + id_cuenta + "," + precio + ")";
 		  
 		try {
 			stmt = conexion.createStatement();
@@ -226,6 +225,21 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 		}
 		
 		return resultado;	
+	}
+	
+	public String Cobrar(int id) throws SQLException{
+		String resul = "";
+		
+		String a = "SELECT precio_total FROM " +  xcema + ".cuenta WHERE ID_CUENTA = " + id;
+		try {
+			stmt = conexion.createStatement();
+			ResultSet resultado = stmt.executeQuery(a);
+			 resul = resultado.getString("PRECIO_TOTAL");
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resul;
 	}
 }
 	

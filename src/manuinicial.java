@@ -15,11 +15,12 @@ import java.awt.Font;
 public class manuinicial {
 
 	 JFrame frmBarrestauranteLosPerdidos;
-
+	 administraccion administracion;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		administraccion administracion = new administraccion();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,6 +45,7 @@ public class manuinicial {
 	 */
 	private void initialize() {
 		frmBarrestauranteLosPerdidos = new JFrame();
+		frmBarrestauranteLosPerdidos.setBackground(Color.ORANGE);
 		frmBarrestauranteLosPerdidos.setTitle("Bar-Restaurante Los perdidos");
 		frmBarrestauranteLosPerdidos.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DAW1\\Desktop\\fondo.png"));
 		frmBarrestauranteLosPerdidos.getContentPane().setBackground(Color.ORANGE);
