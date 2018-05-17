@@ -120,7 +120,26 @@ public class Cobrar {
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
+			
+				int total = Integer.valueOf(textField.getText());
+				
+					textField.setText(Integer.toString(total));
+				
+			
+				int pago = Integer.valueOf(textField.getText());
+				
+					textField_1.setText(Integer.toString(pago));
+				
+				
+				int devolucion = total-pago;
+				
+					textField_1.setText(Integer.toString(devolucion));
+				
+				
+			
 			}
+			
+			
 		});
 		boton.setBounds(224, 29, 18, 20);
 		frame.getContentPane().add(boton);
