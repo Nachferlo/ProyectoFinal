@@ -40,6 +40,8 @@ public class administraccion {
 		int precio;
 		int cantidad;
 		
+	ConexionBBDD conexion;
+		
 	public administraccion() {
 		initialize();
 	}
@@ -48,7 +50,7 @@ public class administraccion {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		ConexionBBDD conexion = new ConexionBBDD();
+		conexion = new ConexionBBDD();
 		
 		frmAdministracin = new JFrame();
 		frmAdministracin.setTitle("Administraci\u00F3n");

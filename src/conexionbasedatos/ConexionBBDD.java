@@ -26,15 +26,8 @@ public class ConexionBBDD {
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conexion = DriverManager.getConnection(url, usr, pwd);
-			
-			if(!conexion.isClosed()) {
-				System.out.println("Conexión establecida");
-			}
-			else
-				System.out.println("Fallo en Conexión");	
+			conexion = DriverManager.getConnection(url, usr, pwd);	
 			}catch (Exception e) {
-				System.out.println("ERROR en conexión con ORACLE");	
 				e.printStackTrace();
 			}		
 	}
@@ -215,20 +208,6 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			e.printStackTrace();
 		}		
 		return resultado;	
-	}
-	
-	public String Cobrar(int id) throws SQLException{
-		String resul = "";	
-		String a = "SELECT precio_total FROM " +  xcema + ".cuenta WHERE ID_CUENTA = " + id;
-		try {
-			stmt = conexion.createStatement();
-			ResultSet resultado = stmt.executeQuery(a);
-			 resul = resultado.getString("PRECIO_TOTAL");
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return resul;
 	}
 	
 	public void FicheroINI() {

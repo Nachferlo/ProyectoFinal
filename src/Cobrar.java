@@ -9,6 +9,7 @@ import conexionbasedatos.ConexionBBDD;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
+import java.awt.Color;
 
 public class Cobrar {
 
@@ -16,7 +17,6 @@ public class Cobrar {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
 	private JTable table;
 	
 
@@ -33,6 +33,7 @@ public class Cobrar {
 	private void initialize() {
 		ConexionBBDD conexion = new ConexionBBDD();
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(153, 204, 102));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -42,12 +43,12 @@ public class Cobrar {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblTotal = new JLabel("Total");
-		lblTotal.setBounds(47, 63, 46, 14);
+		JLabel lblTotal = new JLabel("Precio");
+		lblTotal.setBounds(31, 63, 46, 14);
 		frame.getContentPane().add(lblTotal);
 		
 		JLabel lblPago = new JLabel("Pago");
-		lblPago.setBounds(47, 94, 46, 14);
+		lblPago.setBounds(31, 94, 46, 14);
 		frame.getContentPane().add(lblPago);
 		
 		textField_1 = new JTextField();
@@ -60,8 +61,8 @@ public class Cobrar {
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
-		JLabel lblDevolucion = new JLabel("devoluci\u00F3n");
-		lblDevolucion.setBounds(47, 125, 60, 14);
+		JLabel lblDevolucion = new JLabel("Devoluci\u00F3n");
+		lblDevolucion.setBounds(31, 125, 76, 14);
 		frame.getContentPane().add(lblDevolucion);
 		
 		JButton btnAbrirCaja = new JButton("Abrir caja");
@@ -97,15 +98,6 @@ public class Cobrar {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(btnAtras);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(117, 29, 97, 20);
-		frame.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
-		
-		JLabel lblIdmesa = new JLabel("ID_MESA");
-		lblIdmesa.setBounds(47, 32, 46, 14);
-		frame.getContentPane().add(lblIdmesa);
-		
 		JButton boton = new JButton("");
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,39 +106,22 @@ public class Cobrar {
 		});
 		boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.valueOf(textField_3.getText());
-				try {
-					textField.setText(String.valueOf(conexion.Cobrar(id)));
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			
-				int total = Integer.valueOf(textField.getText());
-				
-					textField.setText(Integer.toString(total));
-				
-			
+							
 				int pago = Integer.valueOf(textField.getText());
-				
-					textField_1.setText(Integer.toString(pago));
-				
-				
-				int devolucion = total-pago;
-				
-					textField_1.setText(Integer.toString(devolucion));
-				
-				
+				int total = Integer.valueOf(textField_1.getText());
+				int devolucion = total - pago;
+				textField_2.setText(String.valueOf(devolucion));
 			
 			}
 			
 			
 		});
-		boton.setBounds(224, 29, 18, 20);
+		boton.setBounds(224, 60, 18, 20);
 		frame.getContentPane().add(boton);
 		
 		table = new JTable();
 		table.setModel(conexion.ConsultaTablaCUENTA());
-		table.setBounds(269, 48, 142, 119);
+		table.setBounds(264, 45, 147, 122);
 		frame.getContentPane().add(table);
 	}
 }
