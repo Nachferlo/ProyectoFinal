@@ -87,6 +87,7 @@ public class administraccion {
 				if(id_producto != 0 && categoria != null && nombre != null && precio != 0 && cantidad != 0) {
 					try {
 						conexion.AñadirProducto(id_producto, categoria, nombre, precio, cantidad);
+						conexion.ConsultaTablaEmpleados();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -106,6 +107,7 @@ public class administraccion {
 				
 				try {
 					conexion.EliminarProducto(id_eliminar);
+					conexion.ConsultaTablaEmpleados();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

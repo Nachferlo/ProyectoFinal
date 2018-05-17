@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-
 import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {
@@ -22,7 +21,6 @@ public class ConexionBBDD {
 	Connection conexion;
 	Statement stmt;
 	
-
 	public ConexionBBDD()  {
 		FicheroINI();
 		
@@ -35,13 +33,10 @@ public class ConexionBBDD {
 			}
 			else
 				System.out.println("Fallo en Conexión");	
-			
-
-		}catch (Exception e) {
-			System.out.println("ERROR en conexión con ORACLE");	
-			e.printStackTrace();
-		}
-		
+			}catch (Exception e) {
+				System.out.println("ERROR en conexión con ORACLE");	
+				e.printStackTrace();
+			}		
 	}
 	
 	public DefaultTableModel ConsultaTablaEmpleados() {
@@ -66,8 +61,7 @@ public class ConexionBBDD {
 			
 		}catch (SQLException s){
 			s.printStackTrace();
-		}
-		
+		}		
 		return ModeloTabla;
 		
 	}
@@ -91,8 +85,7 @@ public class ConexionBBDD {
 			
 		}catch (SQLException s){
 			s.printStackTrace();
-		}
-		
+		}		
 		return ModeloTabla;
 		
 	}
@@ -116,8 +109,7 @@ public class ConexionBBDD {
 			
 		}catch (SQLException s){
 			s.printStackTrace();
-		}
-		
+		}		
 		return ModeloTabla;
 		
 	}
@@ -133,8 +125,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return resultado;	
 	}
 	
@@ -159,8 +150,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			
 		}catch (SQLException s){
 			s.printStackTrace();
-		}
-		
+		}	
 		return ModeloTabla;
 		
 	}
@@ -168,7 +158,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public int AñadirProducto(int id, String categoria, String nombre, int precio, int cantidad) throws SQLException {
 		
 		int resultado = 0;
-		String añadir = "INSERT INTO" +  xcema + ".PRODUCTOS VALUES (" + id + ", " + "'" + categoria + "'" + ", " +  "'" + nombre + "'" + ", " + precio + ", " + cantidad + ")";
+		String añadir = "INSERT INTO " +  xcema + ".PRODUCTOS VALUES (" + id + ", " + "'" + categoria + "'" + ", " +  "'" + nombre + "'" + ", " + precio + ", " + cantidad + ")";
 		System.out.println(añadir);
 		  
 		try {
@@ -177,8 +167,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return resultado;	
 	}
 	
@@ -193,8 +182,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 		return resultado;	
 	}
 
@@ -210,8 +198,7 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return resultado;	
 	}
 	
@@ -226,14 +213,12 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return resultado;	
 	}
 	
 	public String Cobrar(int id) throws SQLException{
-		String resul = "";
-		
+		String resul = "";	
 		String a = "SELECT precio_total FROM " +  xcema + ".cuenta WHERE ID_CUENTA = " + id;
 		try {
 			stmt = conexion.createStatement();
@@ -249,33 +234,20 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 	public void FicheroINI() {
 
 		Properties propiedades = new Properties();
-
 		InputStream entrada = null;
-
+		
 		try {
-
 			File miFichero = new File("src/configuracion.ini");
-
 			if(miFichero.exists()) {
-
 				entrada = new FileInputStream(miFichero);
-
 				propiedades.load(entrada);
-
 				url=propiedades.getProperty("url");
-
 				usr=propiedades.getProperty("usuario");
-
 				pwd=propiedades.getProperty("contraseña");
-
 				xcema=propiedades.getProperty("xcema");
-
 			}
-
 			else {
-
 				System.err.println("fichero no encontrado");
-
 			}
 
 		}catch(IOException ex) {
@@ -304,6 +276,3 @@ public int EliminarCuenta(int id, int precio) throws SQLException {
 
 
 }
-	
-	
-
